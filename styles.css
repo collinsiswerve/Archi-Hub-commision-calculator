@@ -1,0 +1,313 @@
+:root {
+    color-scheme: light;
+    font-family: Inter, Arial, sans-serif;
+    color: #172d46;
+    background: #edf3fa;
+    --blue: #17528f;
+    --ink: #172d46;
+    --muted: #4f6279;
+    --border: #c4d1df;
+    --error: #a42323;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.calculator {
+    max-width: 68rem;
+    margin-inline: auto;
+    padding: clamp(1.5rem, 6vw, 4.75rem) clamp(1rem, 4vw, 2rem) 3rem;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.9rem, 3vw, 1.65rem);
+    margin-bottom: clamp(1.3rem, 4vw, 2.2rem);
+}
+
+.brand {
+    flex: none;
+    width: clamp(4.15rem, 10vw, 5.6rem);
+    padding: 0.45rem;
+    border: 1px solid #d6e2ee;
+    border-radius: 0.85rem;
+    background: #fff;
+}
+
+.brand img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+h1,
+h2,
+p,
+dl,
+dd {
+    margin: 0;
+}
+
+h1 {
+    font-size: clamp(1.85rem, 4.8vw, 3.35rem);
+    line-height: 1.06;
+    letter-spacing: -0.045em;
+}
+
+h2 {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+}
+
+.calculator-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.card {
+    border: 1px solid #d7e2ee;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 12px 32px rgb(29 61 95 / 7%);
+}
+
+.details-card,
+.estimate-details {
+    padding: clamp(1.1rem, 3.25vw, 1.85rem);
+}
+
+.card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.35rem;
+}
+
+form {
+    display: grid;
+    gap: 1.15rem;
+}
+
+.field {
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+}
+
+label {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+input,
+select,
+button {
+    font: inherit;
+}
+
+select,
+.amount-input {
+    width: 100%;
+    min-height: 3.15rem;
+    border: 1px solid var(--border);
+    border-radius: 0.55rem;
+    background: #f7f9fc;
+    color: var(--ink);
+}
+
+select {
+    padding: 0.65rem 0.8rem;
+}
+
+select:invalid,
+input::placeholder {
+    color: var(--muted);
+}
+
+select:focus-visible,
+.clear-button:focus-visible,
+.amount-input:focus-within {
+    outline: 3px solid #3378bb;
+    outline-offset: 2px;
+}
+
+.amount-input {
+    display: flex;
+    align-items: center;
+}
+
+.amount-input > span {
+    padding-inline: 0.8rem;
+    border-right: 1px solid var(--border);
+    color: var(--blue);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.amount-input input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    min-height: 3rem;
+    padding: 0.6rem 0.75rem;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+}
+
+.amount-input:has(input[aria-invalid="true"]) {
+    border-color: var(--error);
+}
+
+.field-hint,
+.field-error,
+.estimate-hint {
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.field-hint,
+.estimate-row small {
+    color: var(--muted);
+}
+
+.field-error {
+    color: var(--error);
+}
+
+.clear-button {
+    flex: none;
+    min-height: 2.75rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: #fff;
+    color: var(--blue);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    background: #eaf2fb;
+}
+
+.estimate-card {
+    overflow: hidden;
+}
+
+.estimate-highlight {
+    min-height: 12rem;
+    padding: clamp(1.25rem, 3.25vw, 1.85rem);
+    background: #103762;
+    color: #fff;
+}
+
+.estimate-highlight h2 {
+    color: #e4efff;
+}
+
+.commission-amount {
+    margin-block: 0.65rem 0.45rem;
+    font-size: clamp(1.95rem, 4.1vw, 2.8rem);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.12;
+    letter-spacing: -0.045em;
+    overflow-wrap: anywhere;
+}
+
+.estimate-hint,
+.commission-rate {
+    color: #d5e6fa;
+}
+
+.commission-rate {
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.estimate-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0.65rem;
+}
+
+.estimate-row dt,
+.estimate-row dd {
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.estimate-row dd {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.estimate-row small {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.82rem;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.total-row {
+    margin-top: 1.05rem;
+    padding-top: 1.05rem;
+    border-top: 1px solid #dce5f0;
+    color: #123d6c;
+}
+
+.total-row dd {
+    font-size: 1.06rem;
+}
+
+.notice {
+    margin-bottom: 1rem;
+    color: var(--error);
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@media (max-width: 47rem) {
+    .calculator-layout {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .estimate-highlight {
+        min-height: 0;
+    }
+}
+
+@media (max-width: 24rem) {
+    .estimate-row {
+        grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+    }
+}

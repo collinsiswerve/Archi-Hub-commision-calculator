@@ -1,69 +1,106 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en-KE">
 <head>
-    <title>Archi-hub Commission Calculator</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 40px; display: flex; justify-content: center; }
-        .calculator { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
-        h2 { text-align: center; color: #2c3e50; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 15px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: bold; margin-bottom: 8px; color: #34495e; font-size: 14px;}
-        input[type="number"], select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 16px; box-sizing: border-box; background-color: #f8fafc; }
-        input[type="number"]:focus, select:focus { outline: none; border-color: #3b82f6; background-color: #fff; }
-        .results { margin-top: 30px; padding: 25px 20px; background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; text-align: center; }
-        .results h3 { margin: 0; color: #0369a1; font-size: 26px; }
-        .results p { margin: 10px 0 0; color: #0284c7; font-size: 16px; font-weight: bold; }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#edf3fa">
+    <title>Referral commission calculator | Archi-Hub Studio</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./calculator.js" defer></script>
 </head>
 <body>
+    <main class="calculator">
+        <header class="page-header">
+            <div class="brand">
+                <img src="./assets/archi-hub-studio.jpg" alt="Archi-Hub Studio" width="457" height="547">
+            </div>
+            <h1>Referral commission calculator</h1>
+        </header>
 
-<div class="calculator">
-    <h2>Archi-hub Commission Calculator</h2>
-    
-    <div class="form-group">
-        <label for="projectSum">Project Sum (Ksh)</label>
-        <input type="number" id="projectSum" value="1000000" oninput="calculate()">
-    </div>
+        <noscript>
+            <p class="notice">Enable JavaScript to calculate a referral commission.</p>
+        </noscript>
 
-    <div class="form-group">
-        <label for="scope">Scope of Work</label>
-        <select id="scope" onchange="calculate()">
-            <option value="0.03">Design Only (3.0%)</option>
-            <option value="0.02">Project Management (2.0%)</option>
-            <option value="0.015">Repairs & Renovations (1.5%)</option>
-            <option value="0.0125">Design & Construction (1.25%)</option>
-            <option value="0.01">Construction Only (1.0%)</option>
-        </select>
-    </div>
+        <div class="calculator-layout">
+            <section class="details-card card" aria-labelledby="details-heading">
+                <div class="card-heading">
+                    <h2 id="details-heading">Project details</h2>
+                    <button id="clearDetails" type="button" class="clear-button">Clear details</button>
+                </div>
 
-    <div class="form-group">
-        <label for="duration">Project Duration</label>
-        <select id="duration" onchange="calculate()">
-            <option value="1.0">Under 1 Month (100% of Base)</option>
-            <option value="0.8">1 to 3 Months (80% of Base)</option>
-            <option value="0.6">3 to 6 Months (60% of Base)</option>
-            <option value="0.4">Over 6 Months (40% of Base)</option>
-        </select>
-    </div>
+                <form id="projectDetails" novalidate>
+                    <div class="field">
+                        <label for="projectSum">Amount paid by the client</label>
+                        <div class="amount-input">
+                            <span aria-hidden="true">KES</span>
+                            <input id="projectSum" name="projectSum" type="text" inputmode="decimal"
+                                placeholder="1,000,000.00" autocomplete="off" spellcheck="false"
+                                aria-describedby="amountHint amountError" required>
+                        </div>
+                        <p class="field-hint" id="amountHint">Use the KES amount the client has paid to Archi-Hub for this contract.</p>
+                        <p class="field-error" id="amountError" hidden></p>
+                    </div>
 
-    <div class="form-group">
-        <label for="referrals">Previous Referrals</label>
-        <select id="referrals" onchange="calculate()">
-            <option value="0">0 Previous (+0.0%)</option>
-            <option value="0.0025">1 to 3 Previous (+0.25%)</option>
-            <option value="0.005">4+ Previous (+0.50%)</option>
-        </select>
-    </div>
+                    <div class="field">
+                        <label for="scope">Type of work</label>
+                        <select id="scope" name="scope" required>
+                            <option value="" disabled selected>Select the type of work</option>
+                            <option value="0.03">Design only</option>
+                            <option value="0.02">Project management</option>
+                            <option value="0.015">Repairs and renovations</option>
+                            <option value="0.0125">Design and construction</option>
+                            <option value="0.01">Construction only</option>
+                        </select>
+                    </div>
 
-    <div class="results">
-        <h3 id="totalPayout">Payout: Ksh 30,000.00</h3>
-        <p id="finalRate">Final Rate: 3.00%</p>
-    </div>
-</div>
+                    <div class="field">
+                        <label for="duration">Project duration</label>
+                        <select id="duration" name="duration" aria-describedby="durationHint" required>
+                            <option value="" disabled selected>Select the duration</option>
+                            <option value="1.0">Less than 1 month</option>
+                            <option value="0.8">1 to 3 months</option>
+                            <option value="0.6">More than 3, up to 6 months</option>
+                            <option value="0.4">More than 6 months</option>
+                        </select>
+                        <p class="field-hint" id="durationHint">From the day the initial deposit clears to project handover.</p>
+                    </div>
 
-<script>
-    var _0x41f8=["\x76\x61\x6C\x75\x65","\x70\x72\x6F\x6A\x65\x63\x74\x53\x75\x6D","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x73\x63\x6F\x70\x65","\x64\x75\x72\x61\x74\x69\x6F\x6E","\x72\x65\x66\x65\x72\x72\x61\x6C\x73","\x65\x6E\x2D\x4B\x45","\x64\x65\x63\x69\x6D\x61\x6C","\x74\x6F\x74\x61\x6C\x50\x61\x79\x6F\x75\x74","\x50\x61\x79\x6F\x75\x74\x3A\x20\x4B\x73\x68\x20","\x66\x6F\x72\x6D\x61\x74","\x69\x6E\x6E\x65\x72\x54\x65\x78\x74","\x66\x69\x6E\x61\x6C\x52\x61\x74\x65","\x46\x69\x6E\x61\x6C\x20\x52\x61\x74\x65\x3A\x20","\x74\x6F\x46\x69\x78\x65\x64","\x25"];function calculate(){var _0xb146x2=parseFloat(document[_0x41f8[2]](_0x41f8[1])[_0x41f8[0]])||0;var _0xb146x3=parseFloat(document[_0x41f8[2]](_0x41f8[3])[_0x41f8[0]]);var _0xb146x4=parseFloat(document[_0x41f8[2]](_0x41f8[4])[_0x41f8[0]]);var _0xb146x5=parseFloat(document[_0x41f8[2]](_0x41f8[5])[_0x41f8[0]]);var _0xb146x6=(_0xb146x3*_0xb146x4)+_0xb146x5;var _0xb146x7=_0xb146x2*_0xb146x6;var _0xb146x8= new Intl.NumberFormat(_0x41f8[6],{style:_0x41f8[7],minimumFractionDigits:2,maximumFractionDigits:2});document[_0x41f8[2]](_0x41f8[8])[_0x41f8[11]]=_0x41f8[9]+_0xb146x8[_0x41f8[10]](_0xb146x7);document[_0x41f8[2]](_0x41f8[12])[_0x41f8[11]]=_0x41f8[13]+(_0xb146x6*100)[_0x41f8[14]](2)+_0x41f8[15]}calculate();
-</script>
+                    <div class="field">
+                        <label for="referrals">Clients you’ve referred before</label>
+                        <select id="referrals" name="referrals">
+                            <option value="0" selected>None, this is my first referral</option>
+                            <option value="0.0025">1 to 3 clients</option>
+                            <option value="0.005">4 or more clients</option>
+                        </select>
+                    </div>
+                </form>
+            </section>
 
+            <section class="estimate-card card" aria-labelledby="estimate-heading">
+                <div class="estimate-highlight">
+                    <h2 id="estimate-heading">Estimated commission</h2>
+                    <p id="totalPayout" class="commission-amount">—</p>
+                    <p id="estimateHint" class="estimate-hint">Enter the amount paid, the type of work and the project duration.</p>
+                    <p id="finalRate" class="commission-rate" hidden></p>
+                </div>
+
+                <dl class="estimate-details">
+                    <div class="estimate-row">
+                        <dt>
+                            One-off finder’s fee
+                            <small>Paid once the client’s commitment fee clears.</small>
+                        </dt>
+                        <dd id="finderFee">—</dd>
+                    </div>
+                    <div class="estimate-row total-row">
+                        <dt>Total with finder’s fee</dt>
+                        <dd id="combinedPayout">—</dd>
+                    </div>
+                </dl>
+
+                <p id="estimateAnnouncement" class="visually-hidden" role="status" aria-atomic="true"></p>
+            </section>
+        </div>
+    </main>
 </body>
 </html>
